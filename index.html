@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>MotoElite — 28 Marques · 200+ Modèles</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@300;400;500;600;700&family=Barlow+Condensed:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --red:#E8181A;--red-d:#A81012;--red-l:#FF4547;
+  --bg:#0a0a0a;--bg2:#111;--bg3:#1a1a1a;--bg4:#222;
+  --t:#f0ede8;--tm:#9a9590;--td:#555;
+  --brd:rgba(232,24,26,.15);--brd2:rgba(232,24,26,.35);
+  --chrome:#8a8a8a;--chrome-l:#c0c0c0;
+  --fd:'Bebas Neue',sans-serif;--fb:'Barlow Condensed',sans-serif;--fu:'Rajdhani',sans-serif;
+}
+[data-theme="light"]{
+  --bg:#f0eeec;--bg2:#fff;--bg3:#e8e4e0;--bg4:#dedad5;
+  --t:#111;--tm:#555;--td:#999;
+  --brd:rgba(180,20,20,.1);--brd2:rgba(180,20,20,.25);
+  --chrome:#666;--chrome-l:#333;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--t);font-family:var(--fu);overflow-x:hidden;transition:background .3s,color .3s}
+::selection{background:var(--red);color:#fff}
+::-webkit-scrollbar{width:3px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--red-d)}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:62px;background:rgba(10,10,10,.97);backdrop-filter:blur(14px);border-bottom:1px solid var(--brd2);transition:height .3s,background .3s}
+[data-theme="light"] nav{background:rgba(240,238,236,.97)}
+.logo{font-family:var(--fd);font-size:2rem;color:var(--red);letter-spacing:.08em;text-decoration:none;flex-shrink:0;line-height:1}
+.logo span{color:var(--t)}
+.nav-mid{flex:1;margin:0 1.5rem;max-width:360px}
+.sw{position:relative}
+.si{position:absolute;left:11px;top:50%;transform:translateY(-50%);opacity:.4;pointer-events:none;font-size:.85rem}
+#search{width:100%;background:var(--bg3);border:1px solid rgba(232,24,26,.2);color:var(--t);font-family:var(--fu);font-size:.85rem;padding:8px 12px 8px 32px;outline:none;transition:border .2s;border-radius:0}
+#search:focus{border-color:var(--red)}
+#search::placeholder{color:var(--td)}
+.nav-r{display:flex;align-items:center;gap:.6rem;flex-shrink:0}
+.ibtn{background:none;border:1px solid var(--brd2);color:var(--t);width:36px;height:36px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.9rem;transition:all .2s}
+.ibtn:hover{border-color:var(--red);color:var(--red)}
+
+/* ── DROPDOWN ── */
+.dropdown{position:relative}
+.ddt{display:flex;align-items:center;gap:7px;background:none;border:1px solid var(--brd2);color:var(--t);font-family:var(--fu);font-size:.78rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:8px 14px;cursor:pointer;transition:all .2s;white-space:nowrap}
+.ddt:hover{border-color:var(--red);color:var(--red)}
+.dda{width:8px;height:8px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg) translateY(-2px);transition:transform .2s}
+.dropdown.open .dda{transform:rotate(-135deg) translateY(-2px)}
+.ddm{position:absolute;top:calc(100% + 6px);right:0;min-width:265px;background:var(--bg2);border:1px solid var(--brd2);max-height:420px;overflow-y:auto;opacity:0;transform:translateY(-8px) scaleY(.95);pointer-events:none;transition:all .2s cubic-bezier(.16,1,.3,1);transform-origin:top right;z-index:200}
+.ddm::-webkit-scrollbar{width:3px}.ddm::-webkit-scrollbar-thumb{background:var(--red-d)}
+.dropdown.open .ddm{opacity:1;transform:none;pointer-events:all}
+.ddc{padding:7px 14px 3px;font-size:.6rem;letter-spacing:.22em;color:var(--td);text-transform:uppercase;border-top:1px solid var(--brd)}
+.ddc:first-child{border-top:none}
+.ddi{display:flex;align-items:center;justify-content:space-between;padding:9px 14px;border-bottom:1px solid rgba(255,255,255,.04);cursor:pointer;font-size:.83rem;transition:background .15s}
+[data-theme="light"] .ddi{border-bottom-color:rgba(0,0,0,.05)}
+.ddi:hover{background:rgba(232,24,26,.08)}
+.ddi.active{background:rgba(232,24,26,.14);color:var(--red)}
+.ddcnt{font-size:.65rem;color:var(--td)}
+
+/* ── SEARCH RESULTS ── */
+#sr{position:fixed;top:62px;left:0;right:0;z-index:99;background:var(--bg2);border-bottom:1px solid var(--brd2);max-height:55vh;overflow-y:auto;display:none}
+#sr.vis{display:block}
+.srh{padding:8px 2rem;font-size:.62rem;letter-spacing:.2em;color:var(--td);text-transform:uppercase;border-bottom:1px solid var(--brd);background:var(--bg3)}
+.sri{display:flex;align-items:center;justify-content:space-between;padding:11px 2rem;border-bottom:1px solid var(--brd);cursor:pointer;transition:background .15s;gap:1rem}
+.sri:hover{background:rgba(232,24,26,.05)}
+.srm{font-size:.92rem;font-weight:600;color:var(--t)}
+.srb{font-size:.7rem;color:var(--td);margin-top:1px}
+.srp{font-family:var(--fd);font-size:1.2rem;color:var(--red);letter-spacing:.05em;white-space:nowrap}
+.srcc{font-size:.68rem;color:var(--td)}
+.srno{padding:2rem;text-align:center;color:var(--td);font-size:.88rem}
+
+/* ── HERO ── */
+#hero{height:100vh;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.hg{position:absolute;inset:0;background-image:linear-gradient(rgba(232,24,26,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(232,24,26,.06) 1px,transparent 1px);background-size:60px 60px;animation:gm 15s linear infinite}
+@keyframes gm{to{transform:translateY(60px)}}
+.ho{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 40%,rgba(232,24,26,.08) 0%,transparent 60%),linear-gradient(180deg,rgba(10,10,10,.05) 0%,rgba(10,10,10,.92) 100%)}
+[data-theme="light"] .ho{background:radial-gradient(ellipse at 50% 40%,rgba(232,24,26,.06) 0%,transparent 60%),linear-gradient(180deg,transparent 0%,rgba(240,238,236,.94) 100%)}
+/* diagonal speed lines */
+.hlines{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.hlines::before{content:'';position:absolute;top:-50%;left:-10%;width:3px;height:200%;background:linear-gradient(transparent,rgba(232,24,26,.15),transparent);transform:rotate(20deg);animation:sl 3s ease-in-out infinite}
+.hlines::after{content:'';position:absolute;top:-50%;left:20%;width:1px;height:200%;background:linear-gradient(transparent,rgba(232,24,26,.08),transparent);transform:rotate(20deg);animation:sl 3s .8s ease-in-out infinite}
+@keyframes sl{0%,100%{opacity:.3}50%{opacity:1}}
+.hc{position:relative;z-index:2;text-align:center;padding:0 2rem}
+.hey{font-family:var(--fb);font-size:.75rem;letter-spacing:.35em;text-transform:uppercase;color:var(--red);margin-bottom:1rem;animation:fu .7s ease both;font-weight:400}
+.hh{font-family:var(--fd);font-size:clamp(4rem,10vw,10rem);line-height:.88;margin-bottom:.5rem;animation:fu .7s .1s ease both;letter-spacing:.04em}
+.hh em{color:var(--red);font-style:normal}
+.hsub{font-family:var(--fb);font-size:1.1rem;color:var(--tm);letter-spacing:.12em;max-width:480px;margin:0 auto 2.5rem;animation:fu .7s .2s ease both;font-weight:300}
+.hnums{display:flex;gap:3rem;justify-content:center;margin-bottom:2.5rem;animation:fu .7s .3s ease both}
+.hn .v{font-family:var(--fd);font-size:3rem;color:var(--red);display:block;line-height:1;letter-spacing:.04em}
+.hn .l{font-size:.65rem;letter-spacing:.2em;color:var(--td);text-transform:uppercase;font-family:var(--fb)}
+.hcta{display:inline-flex;align-items:center;gap:12px;background:var(--red);color:#fff;font-family:var(--fd);font-size:1.1rem;letter-spacing:.12em;padding:14px 38px;border:none;cursor:pointer;transition:all .2s;animation:fu .7s .4s ease both;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%)}
+.hcta:hover{background:var(--red-l);transform:translateY(-2px)}
+.hscroll{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);z-index:2;display:flex;flex-direction:column;align-items:center;gap:7px;color:var(--td);font-size:.62rem;letter-spacing:.2em;font-family:var(--fb)}
+.scln{width:1px;height:44px;background:linear-gradient(transparent,var(--red));animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:.25}50%{opacity:1}}
+@keyframes fu{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── MAIN ── */
+#main{padding:5rem 2rem;max-width:1440px;margin:0 auto}
+.sh{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:2.5rem;padding-bottom:1.2rem;border-bottom:2px solid var(--brd2)}
+.se{font-family:var(--fb);font-size:.68rem;letter-spacing:.3em;text-transform:uppercase;color:var(--red);margin-bottom:.4rem;font-weight:400}
+.st{font-family:var(--fd);font-size:clamp(2rem,4vw,3.5rem);line-height:1;letter-spacing:.04em}
+.stb{color:var(--red)}
+.smeta{font-size:.72rem;color:var(--td);letter-spacing:.1em;text-align:right;font-family:var(--fb)}
+
+/* ── BRAND PANEL ── */
+.bp{display:grid;grid-template-columns:250px 1fr;background:var(--bg2);border:1px solid var(--brd);margin-bottom:2.5rem;position:relative;overflow:hidden}
+.bp::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--bc,var(--red)) 0%,transparent 50%)}
+.bp::after{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:var(--bc,var(--red));opacity:.5}
+.bpl{padding:2rem 1.75rem;border-right:1px solid var(--brd);display:flex;flex-direction:column;justify-content:center;gap:.7rem}
+.bpn{font-family:var(--fd);font-size:2.4rem;color:var(--red);line-height:1;letter-spacing:.04em}
+.bpfc{display:inline-flex;align-items:center;gap:6px;font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;background:rgba(232,24,26,.08);border:1px solid var(--brd2);padding:4px 10px;color:var(--red);width:fit-content;font-family:var(--fb)}
+.bpcity{font-size:.67rem;color:var(--td);letter-spacing:.1em;font-family:var(--fb)}
+.bpstats{display:flex;gap:1.5rem;margin-top:.3rem}
+.bps .v{font-family:var(--fd);font-size:1.8rem;color:var(--red);display:block;line-height:1;letter-spacing:.04em}
+.bps .l{font-size:.58rem;color:var(--td);letter-spacing:.12em;text-transform:uppercase;font-family:var(--fb)}
+.bpr{padding:2rem;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden}
+.bpg{position:absolute;right:.5rem;top:50%;transform:translateY(-50%);font-family:var(--fd);font-size:8rem;color:rgba(232,24,26,.04);line-height:1;pointer-events:none;user-select:none;letter-spacing:.02em}
+.bpdesc{font-family:var(--fb);font-size:.95rem;line-height:1.75;color:var(--tm);margin-bottom:1rem;position:relative;z-index:1;font-weight:300}
+.bptags{display:flex;flex-wrap:wrap;gap:6px;position:relative;z-index:1}
+.bptag{font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;border:1px solid var(--brd2);color:var(--red);padding:3px 9px;font-family:var(--fb);clip-path:polygon(4px 0%,100% 0%,calc(100% - 4px) 100%,0% 100%)}
+
+/* ── TOOLBAR ── */
+.tb{display:flex;align-items:center;gap:.6rem;margin-bottom:1.5rem;flex-wrap:wrap}
+.flbl{font-size:.62rem;letter-spacing:.22em;color:var(--td);text-transform:uppercase;margin-right:.2rem;font-family:var(--fb)}
+.fb{font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;background:none;border:1px solid rgba(232,24,26,.2);color:var(--tm);padding:6px 13px;cursor:pointer;transition:all .18s;font-family:var(--fu);clip-path:polygon(4px 0%,100% 0%,calc(100% - 4px) 100%,0% 100%)}
+.fb:hover,.fb.on{border-color:var(--red);color:var(--red);background:rgba(232,24,26,.06)}
+.ss{margin-left:auto;background:var(--bg3);border:1px solid rgba(232,24,26,.2);color:var(--t);font-family:var(--fu);font-size:.72rem;padding:6px 26px 6px 10px;cursor:pointer;outline:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23E8181A'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center}
+
+/* ── CARS GRID ── */
+.cg{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1px;background:var(--brd)}
+.cc{background:var(--bg2);display:flex;flex-direction:column;transition:background .2s;position:relative}
+.cc:hover{background:var(--bg3)}
+
+/* ── CARD VISUAL ── */
+.cv{height:140px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:.3rem}
+.cvbg{position:absolute;inset:0}
+.cvpat{position:absolute;inset:0;background-image:repeating-linear-gradient(-55deg,transparent,transparent 6px,rgba(255,255,255,.02) 6px,rgba(255,255,255,.02) 7px)}
+/* speed lines on card */
+.cvlines{position:absolute;inset:0;overflow:hidden}
+.cvlines::before{content:'';position:absolute;top:0;right:30%;width:1px;height:100%;background:linear-gradient(transparent,rgba(232,24,26,.2),transparent);transform:skewX(-20deg)}
+.cvlines::after{content:'';position:absolute;top:0;right:20%;width:2px;height:100%;background:linear-gradient(transparent,rgba(232,24,26,.08),transparent);transform:skewX(-20deg)}
+.cvtype{font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.35);position:absolute;top:.7rem;left:.8rem;z-index:1;font-family:var(--fb)}
+.cvnum{font-size:.58rem;letter-spacing:.18em;color:rgba(255,255,255,.2);position:absolute;top:.7rem;right:.8rem;z-index:1}
+.cvm{font-family:var(--fd);font-size:1.5rem;color:rgba(255,255,255,.65);position:relative;z-index:1;line-height:1;text-align:center;padding:0 1rem;letter-spacing:.04em}
+.cvbrand{font-family:var(--fb);font-size:.6rem;letter-spacing:.22em;color:rgba(255,255,255,.28);position:relative;z-index:1;text-transform:uppercase}
+.cvletter{font-family:var(--fd);font-size:5rem;color:rgba(255,255,255,.04);position:absolute;right:.5rem;bottom:-.8rem;line-height:1;user-select:none;letter-spacing:.02em}
+.cvbar{position:absolute;bottom:0;left:0;right:0;height:3px}
+.cvtick{position:absolute;bottom:3px;left:0;width:30px;height:3px;background:rgba(255,255,255,.3)}
+
+/* ── CARD BODY ── */
+.cb{padding:1.1rem;flex:1;display:flex;flex-direction:column}
+.cm{font-family:var(--fd);font-size:1.5rem;color:var(--t);margin-bottom:.15rem;line-height:1;letter-spacing:.03em}
+.csub{font-size:.67rem;color:var(--td);letter-spacing:.1em;margin-bottom:.9rem;font-family:var(--fb)}
+.sg{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--brd);margin-bottom:.9rem}
+.sp{background:var(--bg2);padding:8px 6px;text-align:center;transition:background .2s}
+.cc:hover .sp{background:var(--bg3)}
+.sp .v{font-family:var(--fd);font-size:1.15rem;color:var(--red);display:block;line-height:1;letter-spacing:.03em}
+.sp .l{font-size:.52rem;color:var(--td);letter-spacing:.1em;text-transform:uppercase;margin-top:2px;display:block;font-family:var(--fb)}
+.cdesc{font-size:.78rem;color:var(--tm);line-height:1.6;margin-bottom:.9rem;flex:1;font-family:var(--fb);font-weight:300}
+.cf{display:flex;align-items:center;justify-content:space-between;padding-top:.8rem;border-top:1px solid var(--brd);margin-top:auto}
+.cp{font-family:var(--fd);font-size:1.3rem;color:var(--red);font-weight:400;letter-spacing:.03em}
+.cplbl{font-size:.58rem;color:var(--td);letter-spacing:.08em;font-family:var(--fb)}
+.cbtn{font-size:.63rem;letter-spacing:.14em;text-transform:uppercase;border:1px solid var(--brd2);color:var(--red);background:none;padding:7px 13px;cursor:pointer;transition:all .18s;font-family:var(--fu);font-weight:600;clip-path:polygon(4px 0%,100% 0%,calc(100% - 4px) 100%,0% 100%)}
+.cbtn:hover,.cbtn.on{background:var(--red);color:#fff;border-color:var(--red)}
+.nores{grid-column:1/-1;text-align:center;padding:5rem 2rem;color:var(--td);font-family:var(--fd);font-size:2.5rem;letter-spacing:.05em}
+
+/* ── COMPARE BAR ── */
+#cbar{position:fixed;bottom:0;left:0;right:0;z-index:90;background:var(--bg2);border-top:2px solid var(--red);padding:.75rem 2rem;display:flex;align-items:center;gap:.75rem;transform:translateY(100%);transition:transform .3s;flex-wrap:wrap}
+#cbar.vis{transform:none}
+.clbl{font-size:.67rem;letter-spacing:.18em;color:var(--td);text-transform:uppercase;white-space:nowrap;flex-shrink:0;font-family:var(--fb)}
+.cchips{display:flex;gap:.5rem;flex:1;flex-wrap:wrap}
+.chip{display:flex;align-items:center;gap:5px;background:var(--bg3);border:1px solid var(--brd2);padding:4px 9px;font-size:.72rem;clip-path:polygon(4px 0%,100% 0%,calc(100% - 4px) 100%,0% 100%)}
+.chip button{background:none;border:none;color:var(--red);cursor:pointer;font-size:.9rem;line-height:1;padding:0}
+.cacts{display:flex;gap:.5rem;flex-shrink:0}
+.cgo{background:var(--red);color:#fff;border:none;padding:8px 20px;font-family:var(--fd);font-size:1rem;letter-spacing:.1em;cursor:pointer;transition:background .2s;clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%)}
+.cgo:hover{background:var(--red-l)}
+.cclr{background:none;border:1px solid var(--brd);color:var(--tm);padding:8px 14px;font-family:var(--fu);font-size:.75rem;cursor:pointer}
+
+/* ── MODAL ── */
+#cmod{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.92);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .25s}
+#cmod.open{opacity:1;pointer-events:all}
+.mbox{background:var(--bg2);border:1px solid var(--brd2);border-top:3px solid var(--red);max-width:960px;width:93vw;max-height:88vh;overflow-y:auto;padding:2.5rem;position:relative;animation:fu .3s ease}
+.mbox::-webkit-scrollbar{width:3px}.mbox::-webkit-scrollbar-thumb{background:var(--red-d)}
+.mh{font-family:var(--fd);font-size:2.2rem;color:var(--red);margin-bottom:1.75rem;letter-spacing:.06em}
+.ctab{width:100%;border-collapse:collapse}
+.ctab th{font-family:var(--fd);font-size:1.1rem;font-weight:400;color:var(--red);padding:.8rem;text-align:left;border-bottom:2px solid var(--brd2);letter-spacing:.04em}
+.ctab td{padding:.65rem .8rem;border-bottom:1px solid var(--brd);font-size:.82rem;color:var(--tm)}
+.ctab td:first-child{color:var(--td);font-size:.63rem;letter-spacing:.1em;text-transform:uppercase;font-family:var(--fb)}
+.ctab tr:hover td{background:rgba(232,24,26,.03)}
+.mx{position:absolute;top:1.25rem;right:1.25rem;background:none;border:1px solid var(--brd);color:var(--tm);width:30px;height:30px;cursor:pointer;font-size:.9rem;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.mx:hover{border-color:var(--red);color:var(--red)}
+
+/* ── FOOTER ── */
+footer{padding:2.5rem 2rem;border-top:2px solid var(--brd2);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.5rem}
+.flogo{font-family:var(--fd);font-size:1.6rem;color:var(--red);letter-spacing:.08em}
+.flogo span{color:var(--t)}
+.fgrid{display:flex;gap:2.5rem}
+.fst .v{font-family:var(--fd);font-size:1.8rem;color:var(--red);display:block;letter-spacing:.04em}
+.fst .l{font-size:.58rem;color:var(--td);letter-spacing:.12em;text-transform:uppercase;font-family:var(--fb)}
+.fcopy{font-size:.65rem;color:var(--td);letter-spacing:.07em;font-family:var(--fb)}
+#toast{position:fixed;top:74px;right:1.5rem;background:var(--red);color:#fff;padding:6px 14px;font-family:var(--fd);font-size:1rem;letter-spacing:.08em;opacity:0;transition:opacity .25s;pointer-events:none;z-index:300;clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%)}
+
+/* ── LANG DD ── */
+#lang-menu .ddi{font-size:.82rem;gap:6px}
+
+@media(max-width:860px){
+  nav{padding:0 1rem}
+  .nav-mid{margin:0 .6rem;max-width:160px}
+  #main{padding:4rem 1rem}
+  .bp{grid-template-columns:1fr}
+  .bpl{border-right:none;border-bottom:1px solid var(--brd)}
+  .cg{grid-template-columns:1fr}
+  #cbar{padding:.7rem 1rem}
+  footer{flex-direction:column;align-items:flex-start}
+  .sh{flex-direction:column;align-items:flex-start;gap:.5rem}
+  .hnums{gap:1.5rem}
+}
+</style>
+</head>
+<body>
+
+<nav id="nb">
+  <a class="logo" href="#">Moto<span>Elite</span></a>
+  <div class="nav-mid">
+    <div class="sw">
+      <span class="si">🔍</span>
+      <input id="search" type="text" placeholder="Rechercher moto, marque…" autocomplete="off">
+    </div>
+  </div>
+  <div class="nav-r">
+    <button class="ibtn" id="themeBtn">🌙</button>
+    <div class="dropdown" id="lang-dd">
+      <button class="ddt" onclick="toggleLangDD()" style="gap:5px;padding:8px 10px">
+        <span id="lang-flag">🇫🇷</span>
+        <span id="lang-code" style="font-size:.72rem">FR</span>
+        <span class="dda"></span>
+      </button>
+      <div class="ddm" id="lang-menu" style="min-width:140px">
+        <div class="ddi" onclick="setLang('fr')">🇫🇷 <span style="margin-left:8px">Français</span></div>
+        <div class="ddi" onclick="setLang('en')">🇬🇧 <span style="margin-left:8px">English</span></div>
+        <div class="ddi" onclick="setLang('es')">🇪🇸 <span style="margin-left:8px">Español</span></div>
+      </div>
+    </div>
+    <div class="dropdown" id="dd">
+      <button class="ddt" onclick="toggleDD()">
+        <span id="ddlbl">Marques</span>
+        <span class="dda"></span>
+      </button>
+      <div class="ddm" id="ddm"></div>
+    </div>
+  </div>
+</nav>
+
+<div id="sr">
+  <div class="srh" id="srh">Résultats</div>
+  <div id="srl"></div>
+</div>
+
+<section id="hero">
+  <div class="hg"></div>
+  <div class="ho"></div>
+  <div class="hlines"></div>
+  <div class="hc">
+    <p class="hey">L'univers moto mondial by milan</p>
+    <h1 class="hh">PURE <em>ADRÉNALINE</em><br>SUR 2 ROUES</h1>
+    <p class="hsub">28 marques · 200+ modèles · Routes, circuits et pistes du monde entier</p>
+    <div class="hnums">
+      <div class="hn"><span class="v">28</span><span class="l">Marques</span></div>
+      <div class="hn"><span class="v" id="htot">—</span><span class="l">Modèles</span></div>
+      <div class="hn"><span class="v">14</span><span class="l">Pays</span></div>
+    </div>
+    <button class="hcta" onclick="document.getElementById('main').scrollIntoView({behavior:'smooth'})">EXPLORER</button>
+  </div>
+  <div class="hscroll"><span>DÉFILER</span><div class="scln"></div></div>
+</section>
+
+<section id="main">
+  <div class="sh">
+    <div>
+      <p class="se">Collection mondiale</p>
+      <h2 class="st">MARQUES DE <span class="stb">LÉGENDE</span></h2>
+    </div>
+    <div class="smeta" id="smeta">Sélectionnez une marque</div>
+  </div>
+
+  <div class="bp" id="bpanel">
+    <div class="bpl">
+      <div class="bpn" id="bpn">—</div>
+      <div class="bpfc" id="bpfc">—</div>
+      <div class="bpcity" id="bpcity">—</div>
+      <div class="bpstats">
+        <div class="bps"><span class="v" id="bpmod">—</span><span class="l">Modèles</span></div>
+        <div class="bps"><span class="v" id="bpyr">—</span><span class="l">Fondée</span></div>
+        <div class="bps"><span class="v" id="bpfl">—</span><span class="l">Origine</span></div>
+      </div>
+    </div>
+    <div class="bpr">
+      <div class="bpg" id="bpg">—</div>
+      <p class="bpdesc" id="bpdesc">Sélectionnez une marque dans le menu pour découvrir son histoire et sa gamme complète.</p>
+      <div class="bptags" id="bptags"></div>
+    </div>
+  </div>
+
+  <div class="tb">
+    <span class="flbl">Filtrer :</span>
+    <button class="fb on" onclick="setF('all',this)">Tous</button>
+    <button class="fb" onclick="setF('sportive',this)">Sportive</button>
+    <button class="fb" onclick="setF('trail',this)">Trail / Aventure</button>
+    <button class="fb" onclick="setF('roadster',this)">Roadster / Naked</button>
+    <button class="fb" onclick="setF('gt',this)">Grand Tourisme</button>
+    <button class="fb" onclick="setF('custom',this)">Custom / Cruiser</button>
+    <button class="fb" onclick="setF('supermoto',this)">Supermoto</button>
+    <button class="fb" onclick="setF('electrique',this)">Électrique</button>
+    <select class="ss" id="sortSel" onchange="renderCars()">
+      <option value="">Ordre par défaut</option>
+      <option value="pa">Prix croissant</option>
+      <option value="pd">Prix décroissant</option>
+      <option value="cv">Puissance ↓</option>
+      <option value="v">0-100 le + rapide</option>
+    </select>
+  </div>
+
+  <div class="cg" id="cg"></div>
+</section>
+
+<div id="cbar">
+  <span class="clbl">Comparer</span>
+  <div class="cchips" id="cchips"></div>
+  <div class="cacts">
+    <button class="cclr" onclick="clearCmp()">Effacer</button>
+    <button class="cgo" onclick="openModal()">COMPARER →</button>
+  </div>
+</div>
+
+<div id="cmod" onclick="if(event.target===this)closeModal()">
+  <div class="mbox">
+    <button class="mx" onclick="closeModal()">✕</button>
+    <div class="mh">COMPARATIF</div>
+    <div id="mbody"></div>
+  </div>
+</div>
+
+<footer>
+  <div class="flogo">Moto<span>Elite</span></div>
+  <div class="fgrid">
+    <div class="fst"><span class="v">28</span><span class="l">Marques</span></div>
+    <div class="fst"><span class="v" id="ftot">—</span><span class="l">Modèles</span></div>
+    <div class="fst"><span class="v">14</span><span class="l">Pays</span></div>
+  </div>
+  <div class="fcopy">© 2025 MotoElite — Prix indicatifs, varient selon pays et équipement</div>
+</footer>
+<div id="toast"></div>
+
+<script>
+const B=[
+{id:"honda",name:"Honda",country:"Japon",city:"Minato, Tokyo",yr:"1948",flag:"🇯🇵",color:"#E8181A",
+desc:"Honda est le premier constructeur de motos au monde. Fondé par Soichiro Honda après la guerre, le géant de Tokyo produit des deux-roues allant du scooter à la MotoGP, dominant chaque catégorie depuis 75 ans. La fiabilité légendaire japonaise.",
+tags:["MotoGP","Fiabilité","CBR","Tokyo"],
+cars:[
+{m:"CBR1000RR-R Fireblade SP",y:"2024",t:"sportive",cv:217,v:3.0,vmax:299,kg:201,eng:"I4 1000cc",box:"6-Man",price:"28 000 €",pn:28000,desc:"La Fireblade ultime. Technologie MotoGP directe, 217 ch, aéro HRC. La référence des litres-classes."},
+{m:"CBR600RR",y:"2024",t:"sportive",cv:121,v:3.4,vmax:260,kg:186,eng:"I4 599cc",box:"6-Man",price:"14 500 €",pn:14500,desc:"La middleweight sportive de référence. I4 600cc 121 ch, châssis aluminium, héritière des 600cc de circuit."},
+{m:"CB1000R Black Edition",y:"2024",t:"roadster",cv:143,v:3.1,vmax:250,kg:212,eng:"I4 998cc",box:"6-Man",price:"15 000 €",pn:15000,desc:"Le roadster néo-rétro premium Honda. I4 143 ch, design minimaliste, finition Black Edition exclusive."},
+{m:"Africa Twin 1100",y:"2024",t:"trail",cv:102,v:4.2,vmax:210,kg:226,eng:"Parallel-Twin 1084cc",box:"6-Man DCT",price:"16 500 €",pn:16500,desc:"La reine du trail. Parallel-twin 1084cc, DCT optionnel, DCTA, 40 ans de légende adventure."},
+{m:"Gold Wing Tour",y:"2024",t:"gt",cv:126,v:4.5,vmax:220,kg:385,eng:"Flat-6 1833cc",box:"7-DCT",price:"35 000 €",pn:35000,desc:"Le liner des routes. Flat-6 1833cc, suspension pneumatique, Apple CarPlay, la GT ultime."},
+{m:"CRF1100L Africa Twin Adventure",y:"2024",t:"trail",cv:102,v:4.5,vmax:200,kg:238,eng:"Parallel-Twin 1084cc",box:"6-Man DCT",price:"18 500 €",pn:18500,desc:"L'Africa Twin Adventure Sports. Réservoir 24.8L, suspension semi-active, tout pour l'aventure."},
+{m:"CB650R",y:"2024",t:"roadster",cv:95,v:3.8,vmax:220,kg:202,eng:"I4 649cc",box:"6-Man",price:"9 500 €",pn:9500,desc:"Le roadster middleweight accessible. I4 95 ch, design néo-sport, l'entrée dans la famille CB."},
+{m:"Rebel 1100",y:"2024",t:"custom",cv:87,v:4.5,vmax:180,kg:223,eng:"Parallel-Twin 1084cc",box:"6-Man DCT",price:"13 500 €",pn:13500,desc:"Le custom néo-rétro Honda. Parallel-twin DCT optionnel, design épuré moderne, un cruiser accessible."},
+]},
+{id:"yamaha",name:"Yamaha",country:"Japon",city:"Iwata, Shizuoka",yr:"1955",flag:"🇯🇵",color:"#003087",
+desc:"Yamaha Motor, né à Iwata en 1955, est le deuxième constructeur mondial. La marque aux trois diapasons excelle dans les sportives avec la R1, les trails avec la Ténéré, et domine le MotoGP avec Fabio Quartararo. La passion japonaise à son sommet.",
+tags:["MotoGP","R1","Ténéré","Iwata"],
+cars:[
+{m:"YZF-R1M",y:"2024",t:"sportive",cv:200,v:3.0,vmax:299,kg:200,eng:"I4 998cc Crossplane",box:"6-Man",price:"31 000 €",pn:31000,desc:"La R1 ultime avec amortisseur électronique Öhlins. 200 ch, IMU 6 axes, technologie MotoGP pure."},
+{m:"YZF-R1",y:"2024",t:"sportive",cv:200,v:3.0,vmax:299,kg:201,eng:"I4 998cc Crossplane",box:"6-Man",price:"23 000 €",pn:23000,desc:"Le vrai crossplane. I4 Crossplane 200 ch, couple à plat, la sensation MotoGP sur route."},
+{m:"YZF-R7",y:"2024",t:"sportive",cv:73,v:4.5,vmax:200,kg:188,eng:"Parallel-Twin 689cc",box:"6-Man",price:"9 800 €",pn:9800,desc:"La middleweight accessible. Parallel-twin 73 ch, chassis agile, sportive polyvalente au quotidien."},
+{m:"MT-10 SP",y:"2024",t:"roadster",cv:166,v:3.1,vmax:260,kg:210,eng:"I4 998cc Crossplane",box:"6-Man",price:"20 000 €",pn:20000,desc:"Le Hyper Naked ultime. Crossplane 166 ch, KYB semi-actif, le roadster le plus intense du marché."},
+{m:"MT-09",y:"2024",t:"roadster",cv:119,v:3.2,vmax:240,kg:193,eng:"I3 890cc",box:"6-Man",price:"11 500 €",pn:11500,desc:"Le roadster le plus fun. Tricylindre 890cc 119 ch, 193 kg, la moto la plus plaisante de sa catégorie."},
+{m:"Ténéré 700 World Raid",y:"2024",t:"trail",cv:73,v:4.8,vmax:190,kg:220,eng:"Parallel-Twin 689cc",box:"6-Man",price:"13 500 €",pn:13500,desc:"Le Dakar pour la route. Réservoir 23L, double béquille, suspension WP long travel. L'aventurier ultime."},
+{m:"Tracer 9 GT+",y:"2024",t:"gt",cv:119,v:3.5,vmax:240,kg:220,eng:"I3 890cc",box:"6-Man",price:"15 500 €",pn:15500,desc:"Le sport-tourer tricylindre. 119 ch, suspension semi-active, quickshifter, la GT polyvalente parfaite."},
+{m:"XMAX 300",y:"2024",t:"roadster",cv:28,v:7.5,vmax:145,kg:171,eng:"Mono 292cc",box:"CVT",price:"5 800 €",pn:5800,desc:"Le maxi-scooter premium Yamaha. Mono 292cc, rangements généreux, design premium urbain."},
+]},
+{id:"ducati",name:"Ducati",country:"Italie",city:"Borgo Panigale, Bologne",yr:"1926",flag:"🇮🇹",color:"#CC0000",
+desc:"Ducati est la Ferrari des motos. Fondée à Bologne en 1926, la marque au Desmodromique a conquis la Superbike et le MotoGP avec ses V2 L iconiques. Chaque Ducati est une œuvre d'art mécanique italienne conçue pour l'émotion pure.",
+tags:["MotoGP","Desmodromique","V2 L","Bologne"],
+cars:[
+{m:"Panigale V4 R",y:"2024",t:"sportive",cv:240,v:2.8,vmax:305,kg:193,eng:"V4 998cc Desmosedici",box:"6-Man",price:"46 000 €",pn:46000,desc:"La Ducati de course homologuée route. Desmosedici 240 ch, aile avant, technologie WorldSBK directe."},
+{m:"Panigale V4 S",y:"2024",t:"sportive",cv:215,v:2.9,vmax:299,kg:198,eng:"V4 1103cc",box:"6-Man",price:"30 000 €",pn:30000,desc:"La sportive de référence mondiale. V4 1103cc 215 ch, Öhlins semi-actif, la moto la plus désirée."},
+{m:"Panigale V2",y:"2024",t:"sportive",cv:155,v:3.3,vmax:270,kg:176,eng:"V2 955cc",box:"6-Man",price:"17 500 €",pn:17500,desc:"La Panigale accessible. V2 955cc 155 ch, châssis monocoque aluminium, design Superbike pur."},
+{m:"Streetfighter V4 SP2",y:"2024",t:"roadster",cv:220,v:2.9,vmax:270,kg:195,eng:"V4 1103cc",box:"6-Man",price:"37 000 €",pn:37000,desc:"Le naked hypercar. V4 220 ch avec aileron arrière, Öhlins, le roadster le plus puissant du monde."},
+{m:"Streetfighter V2",y:"2024",t:"roadster",cv:155,v:3.3,vmax:255,kg:178,eng:"V2 955cc",box:"6-Man",price:"18 500 €",pn:18500,desc:"Le naked V2 Ducati. 155 ch, dessin agressif, le roadster accessible de la famille Streetfighter."},
+{m:"Multistrada V4 RS",y:"2024",t:"trail",cv:185,v:3.2,vmax:240,kg:228,eng:"V4 1158cc",box:"6-Man",price:"35 000 €",pn:35000,desc:"Le trail de circuit. V4 RS 185 ch, suspension Öhlins, la Multistrada la plus sportive jamais faite."},
+{m:"Monster SP",y:"2024",t:"roadster",cv:111,v:3.5,vmax:230,kg:188,eng:"V2 937cc",box:"6-Man",price:"16 000 €",pn:16000,desc:"Le Monster en version Sport. V2 111 ch, Öhlins, freins Brembo Stylema. L'icône naked Ducati."},
+{m:"Scrambler Icon",y:"2024",t:"roadster",cv:73,v:5.0,vmax:190,kg:186,eng:"V2 803cc",box:"6-Man",price:"11 500 €",pn:11500,desc:"L'icône néo-rétro Ducati. V2 803cc 73 ch, style café-racer moderne, fun et accessible."},
+{m:"Diavel V4",y:"2024",t:"custom",cv:168,v:3.2,vmax:250,kg:239,eng:"V4 1158cc",box:"6-Man",price:"27 000 €",pn:27000,desc:"Le muscle-cruiser V4. 168 ch dans un custom sport agressif. La moto la plus atypique de Ducati."},
+{m:"Desert Sled Fasthouse",y:"2024",t:"trail",cv:73,v:5.2,vmax:175,kg:194,eng:"V2 803cc",box:"6-Man",price:"13 500 €",pn:13500,desc:"Le scrambler tout-terrain. V2 803cc, pneus enduro, protection renforcée. L'aventurier Ducati."},
+]},
+{id:"bmw_moto",name:"BMW Motorrad",country:"Allemagne",city:"Munich, Bavière",yr:"1923",flag:"🇩🇪",color:"#0066B1",
+desc:"BMW Motorrad, fondé en 1923 à Munich, est le constructeur premium allemand par excellence. Pionniers des Boxer twins, des GPS intégrés et de la suspension Telelever, BMW Motorrad allie technologie de pointe, sécurité et plaisir de conduire.",
+tags:["Boxer","GS","Premium","Munich"],
+cars:[
+{m:"M 1000 RR Competition",y:"2024",t:"sportive",cv:212,v:3.0,vmax:306,kg:192,eng:"I4 999cc",box:"6-Man",price:"38 000 €",pn:38000,desc:"La superbike BMW ultime. I4 212 ch, ailes carbone, DTC, HPR. La BMW la plus radicale jamais faite."},
+{m:"S 1000 RR",y:"2024",t:"sportive",cv:210,v:3.1,vmax:299,kg:197,eng:"I4 999cc",box:"6-Man",price:"25 000 €",pn:25000,desc:"La BMW superbike. ShiftCam 210 ch, DDC semi-actif, la référence technique des litres sportives."},
+{m:"R 1300 GS Adventure",y:"2024",t:"trail",cv:145,v:3.8,vmax:220,kg:268,eng:"Boxer 1300cc",box:"6-Man",price:"23 500 €",pn:23500,desc:"Le trail légendaire dans sa version maximale. Boxer 1300cc 145 ch, suspension semi-active, 30L d'équipement."},
+{m:"R 1300 GS",y:"2024",t:"trail",cv:145,v:3.8,vmax:220,kg:237,eng:"Boxer 1300cc",box:"6-Man",price:"18 000 €",pn:18000,desc:"Le trail de référence mondiale. Boxer 1300cc 145 ch, nouvelle génération, la GS la plus avancée."},
+{m:"R 18 Transcontinental",y:"2024",t:"custom",cv:91,v:5.0,vmax:180,kg:405,eng:"Boxer 1802cc",box:"6-Man",price:"30 000 €",pn:30000,desc:"Le cruiser-GT premium. Boxer 1802cc le plus grand jamais produit par BMW, valises intégrées."},
+{m:"F 900 XR",y:"2024",t:"trail",cv:105,v:3.8,vmax:218,kg:219,eng:"Parallel-Twin 895cc",box:"6-Man",price:"12 500 €",pn:12500,desc:"L'adventure sport accessible. Parallel-twin 105 ch, dynamique sportive, polyvalence absolue."},
+{m:"S 1000 XR",y:"2024",t:"gt",cv:170,v:3.2,vmax:250,kg:228,eng:"I4 999cc",box:"6-Man",price:"21 000 €",pn:21000,desc:"Le sport-tourer I4. 170 ch, dynamique superbike, confort touring. La GT la plus sportive du marché."},
+{m:"CE 04",y:"2024",t:"electrique",cv:42,v:3.8,vmax:120,kg:231,eng:"Électrique 8.9kW",box:"Réducteur",price:"12 000 €",pn:12000,desc:"Le maxi-scooter électrique premium. Design avant-gardiste, 130 km d'autonomie, connectivité totale."},
+]},
+{id:"kawasaki",name:"Kawasaki",country:"Japon",city:"Akashi, Hyogo",yr:"1954",flag:"🇯🇵",color:"#00A550",
+desc:"Kawasaki Heavy Industries, fondé à Akashi, est la marque au logo Ninja. Dominatrice des superbikes avec la ZX-10RR et créatrice de la légendaire Z900RS, Kawasaki incarne la puissance brute japonaise couplée à une fiabilité à toute épreuve.",
+tags:["Ninja","Z","Superbike","Akashi"],
+cars:[
+{m:"Ninja ZX-10RR",y:"2024",t:"sportive",cv:213,v:2.9,vmax:299,kg:207,eng:"I4 998cc",box:"6-Man",price:"29 000 €",pn:29000,desc:"La ZX-10R de course homologuée route. 213 ch, ailes Ninja, technologie WorldSBK directe."},
+{m:"Ninja ZX-10R",y:"2024",t:"sportive",cv:203,v:3.0,vmax:299,kg:207,eng:"I4 998cc",box:"6-Man",price:"20 000 €",pn:20000,desc:"La Ninja de référence. I4 203 ch, KCMF, KECS semi-actif. La superbike verte imbattable."},
+{m:"Ninja H2R",y:"2024",t:"sportive",cv:326,v:2.5,vmax:400,kg:216,eng:"I4 998cc Superchargé",box:"6-Man",price:"55 000 €",pn:55000,desc:"La moto de production la plus puissante au monde. Compresseur centrifuge, 326 ch. Piste uniquement."},
+{m:"Ninja H2",y:"2024",t:"sportive",cv:228,v:2.8,vmax:400,kg:238,eng:"I4 998cc Superchargé",box:"6-Man",price:"30 000 €",pn:30000,desc:"La H2R homologuée route. Superchargée 228 ch, ailes carbone, la moto la plus rapide sur route."},
+{m:"Z900RS",y:"2024",t:"roadster",cv:111,v:3.4,vmax:220,kg:215,eng:"I4 948cc",box:"6-Man",price:"12 500 €",pn:12500,desc:"Le néo-rétro iconique. Design années 70 Z900, I4 moderne 111 ch. La moto la plus vendue au monde."},
+{m:"Z H2",y:"2024",t:"roadster",cv:200,v:3.0,vmax:250,kg:239,eng:"I4 998cc Superchargé",box:"6-Man",price:"25 000 €",pn:25000,desc:"Le roadster superchargé. H2 sans carénage, 200 ch, le hypernaked le plus puissant du Japon."},
+{m:"Versys 1000 SE",y:"2024",t:"trail",cv:120,v:3.8,vmax:220,kg:255,eng:"I4 1043cc",box:"6-Man",price:"16 000 €",pn:16000,desc:"Le trail sport polyvalent. I4 1043cc, suspension Showa SKYHOOK, la moto des longs voyages."},
+{m:"KLX450R",y:"2024",t:"supermoto",cv:45,v:5.0,vmax:140,kg:111,eng:"Mono 449cc",box:"5-Man",price:"9 500 €",pn:9500,desc:"L'enduro compétition homologué. Mono 449cc, train de pneus enduro, la compétition pour la route."},
+]},
+{id:"suzuki",name:"Suzuki",country:"Japon",city:"Hamamatsu, Shizuoka",yr:"1909",flag:"🇯🇵",color:"#1B4195",
+desc:"Suzuki Motor, fondé à Hamamatsu en 1909, est le créateur de la légendaire GSX-R et de la Hayabusa. Cette marque discrète mais redoutable a révolutionné le monde des sportives et continue de proposer des motos d'une valeur exceptionnelle.",
+tags:["GSX-R","Hayabusa","Hamamatsu","Sportive"],
+cars:[
+{m:"Hayabusa",y:"2024",t:"sportive",cv:190,v:2.9,vmax:299,kg:264,eng:"I4 1340cc",box:"6-Man",price:"20 000 €",pn:20000,desc:"La légende vivante. I4 1340cc 190 ch, la moto la plus iconique du monde. Busa forever."},
+{m:"GSX-R1000R",y:"2024",t:"sportive",cv:202,v:3.0,vmax:299,kg:203,eng:"I4 999cc",box:"6-Man",price:"20 000 €",pn:20000,desc:"La GSX-R de référence. 202 ch, variable intake, technologie MotoGP Ecstar. La japonaise redoutable."},
+{m:"GSX-S1000GT",y:"2024",t:"gt",cv:152,v:3.3,vmax:250,kg:226,eng:"I4 999cc",box:"6-Man",price:"15 000 €",pn:15000,desc:"Le sport-tourer accessible. GSX-R motor dans une GT confortable, 152 ch et équipement complet."},
+{m:"GSX-8S",y:"2024",t:"roadster",cv:84,v:4.0,vmax:210,kg:202,eng:"Parallel-Twin 776cc",box:"6-Man",price:"9 000 €",pn:9000,desc:"Le roadster nouveau Suzuki. Parallel-twin 776cc 84 ch, design moderne agressif. Frais et dynamique."},
+{m:"V-Strom 1050XT",y:"2024",t:"trail",cv:107,v:4.0,vmax:210,kg:232,eng:"V-Twin 1037cc",box:"6-Man",price:"14 000 €",pn:14000,desc:"Le trail polyvalent. V-twin 107 ch, protections tout-terrain, le V-Strom le plus équipé."},
+{m:"SV650",y:"2024",t:"roadster",cv:76,v:4.2,vmax:200,kg:197,eng:"V-Twin 645cc",box:"6-Man",price:"7 800 €",pn:7800,desc:"La moto culte. V-twin 645cc 76 ch, 197 kg, la moto de permis préférée des pilotes depuis 25 ans."},
+]},
+{id:"ktm",name:"KTM",country:"Autriche",city:"Mattighofen, Haute-Autriche",yr:"1934",flag:"🇦🇹",color:"#FF6600",
+desc:"KTM, Ready to Race depuis Mattighofen en Autriche. Le champion du monde du rallye Dakar (20 victoires consécutives) fabrique des motos d'enduro, motocross et trail street parmi les plus performantes et légères au monde.",
+tags:["Ready to Race","Dakar","Enduro","Autriche"],
+cars:[
+{m:"1390 Super Duke R Evo",y:"2024",t:"roadster",cv:190,v:3.1,vmax:270,kg:189,eng:"V-Twin 1350cc LC8",box:"6-Man",price:"24 000 €",pn:24000,desc:"La Beast ultime. V-Twin LC8 190 ch dans 189 kg. Le hypernaked le plus radical de la planète."},
+{m:"RC 8C",y:"2024",t:"sportive",cv:140,v:3.5,vmax:260,kg:147,eng:"Parallel-Twin 889cc",box:"6-Man",price:"35 000 €",pn:35000,desc:"100 exemplaires. La KTM piste homologuée route. 147 kg seulement, châssis chromoly ultra-léger."},
+{m:"990 Duke",y:"2024",t:"roadster",cv:135,v:3.3,vmax:245,kg:175,eng:"Parallel-Twin 889cc",box:"6-Man",price:"13 000 €",pn:13000,desc:"Le Duke nouvelle génération. Parallel-twin 135 ch dans 175 kg. La référence du roadster naked."},
+{m:"890 Adventure R",y:"2024",t:"trail",cv:105,v:4.0,vmax:210,kg:207,eng:"Parallel-Twin 889cc",box:"6-Man",price:"15 000 €",pn:15000,desc:"Le trail off-road ultime. Suspensions WP XPLOR long travel, pneus enduro, l'aventurier pur."},
+{m:"1290 Super Adventure S",y:"2024",t:"trail",cv:160,v:3.5,vmax:240,kg:228,eng:"V-Twin 1301cc LC8",box:"6-Man",price:"22 000 €",pn:22000,desc:"L'adventure premium. V-Twin 160 ch, WP semi-actif, radar adaptatif. La technologie trail ultime."},
+{m:"Duke 390",y:"2024",t:"roadster",cv:46,v:5.5,vmax:170,kg:163,eng:"Mono 373cc",box:"6-Man",price:"5 800 €",pn:5800,desc:"L'entrée dans la philosophie KTM. Mono 46 ch léger, freins Bybre, l'initiation Ready to Race."},
+{m:"Freeride E-XC",y:"2024",t:"electrique",cv:18,v:6.0,vmax:80,kg:108,eng:"Électrique 18kW",box:"Réducteur",price:"12 000 €",pn:12000,desc:"L'enduro électrique de trail. 108 kg, silencieux, performant hors route. Le futur de l'enduro KTM."},
+]},
+{id:"aprilia",name:"Aprilia",country:"Italie",city:"Noale, Vénétie",yr:"1945",flag:"🇮🇹",color:"#8B0000",
+desc:"Aprilia, fondé à Noale en Vénétie, est le constructeur le plus titré en Grand Prix 250cc et 125cc. Aujourd'hui membre du groupe Piaggio, Aprilia produit des superbikes RS GP-derived d'une sophistication technique exceptionnelle.",
+tags:["MotoGP","RS","WSBK","Noale"],
+cars:[
+{m:"RSV4 Factory",y:"2024",t:"sportive",cv:221,v:2.9,vmax:305,kg:204,eng:"V4 1099cc",box:"6-Man",price:"30 000 €",pn:30000,desc:"La superbike Aprilia ultime. V4 221 ch, APRC, ailes carbone, Öhlins semi-actif. Le sommet technique."},
+{m:"RS 660 Trophy",y:"2024",t:"sportive",cv:100,v:3.8,vmax:240,kg:183,eng:"Parallel-Twin 659cc",box:"6-Man",price:"13 500 €",pn:13500,desc:"La middleweight sportive Aprilia. Parallel-twin 100 ch, châssis aluminium, look Superbike compact."},
+{m:"Tuono V4 Factory",y:"2024",t:"roadster",cv:185,v:3.1,vmax:270,kg:209,eng:"V4 1099cc",box:"6-Man",price:"25 000 €",pn:25000,desc:"Le roadster V4 absolu. RSV4 sans carénage, 185 ch, le hypernaked technique de référence mondiale."},
+{m:"Tuono 660",y:"2024",t:"roadster",cv:95,v:3.9,vmax:230,kg:183,eng:"Parallel-Twin 659cc",box:"6-Man",price:"11 500 €",pn:11500,desc:"Le roadster sport accessible. Parallel-twin 95 ch, 183 kg, le fun factor Aprilia accessible à tous."},
+{m:"Dorsoduro 900",y:"2024",t:"supermoto",cv:95,v:4.0,vmax:210,kg:182,eng:"V-Twin 896cc",box:"6-Man",price:"12 000 €",pn:12000,desc:"Le supermoto premium Aprilia. V-twin 95 ch, look urbain agressif, la référence du genre."},
+{m:"Tuareg 660",y:"2024",t:"trail",cv:80,v:4.5,vmax:200,kg:204,eng:"Parallel-Twin 659cc",box:"6-Man",price:"12 000 €",pn:12000,desc:"Le trail enduro Aprilia. 80 ch, maniabilité hors-route, l'ADN rallye Aprilia transposé au trail."},
+]},
+{id:"triumph",name:"Triumph",country:"Angleterre",city:"Hinckley, Leicestershire",yr:"1902",flag:"🇬🇧",color:"#003087",
+desc:"Triumph, fondé en 1902 à Hinckley, est la plus ancienne marque moto britannique en activité. Relancée en 1990 par John Bloor, Triumph excelle dans les roadsters triple et les néo-rétro Bonneville, alliant âme britannique et modernité.",
+tags:["Triple","Bonneville","Hinckley","British"],
+cars:[
+{m:"Daytona Moto2 765",y:"2024",t:"sportive",cv:130,v:3.5,vmax:250,kg:166,eng:"I3 765cc",box:"6-Man",price:"20 000 €",pn:20000,desc:"La sportive Triumph de légende. I3 765cc Moto2, 130 ch, 166 kg, édition limitée mythique."},
+{m:"Speed Triple 1200 RR",y:"2024",t:"roadster",cv:180,v:3.1,vmax:260,kg:198,eng:"I3 1160cc",box:"6-Man",price:"25 000 €",pn:25000,desc:"Le roadster britannique de référence. Triple 1160cc 180 ch, Öhlins, la moto la plus intense."},
+{m:"Tiger 1200 GT Pro",y:"2024",t:"trail",cv:150,v:3.5,vmax:220,kg:239,eng:"I3 1160cc",box:"6-Man",price:"20 000 €",pn:20000,desc:"Le trail premium triple. 150 ch, suspension semi-active, Tiger 900 et 1200 en tête du segment."},
+{m:"Bonneville T120",y:"2024",t:"custom",cv:80,v:4.5,vmax:190,kg:224,eng:"Parallel-Twin 1200cc",box:"6-Man",price:"14 000 €",pn:14000,desc:"L'icône britannique. Parallel-twin 1200cc, style 1959 incarné, la moto la plus belle du marché."},
+{m:"Trident 660",y:"2024",t:"roadster",cv:81,v:4.2,vmax:205,kg:189,eng:"I3 660cc",box:"6-Man",price:"8 500 €",pn:8500,desc:"L'entrée dans la famille Triumph. Triple 660cc 81 ch, accessible, le fun factor Triumph sans se ruiner."},
+{m:"Scrambler 1200 XE",y:"2024",t:"trail",cv:90,v:4.3,vmax:190,kg:218,eng:"Parallel-Twin 1200cc",box:"6-Man",price:"18 000 €",pn:18000,desc:"Le scrambler ultime. Parallel-twin 1200cc, suspension Showa 47mm, l'aventurier néo-rétro premium."},
+]},
+{id:"harleydavidson",name:"Harley-Davidson",country:"USA",city:"Milwaukee, Wisconsin",yr:"1903",flag:"🇺🇸",color:"#FF6600",
+desc:"Harley-Davidson, fondé en 1903 à Milwaukee, est le symbole absolu de la liberté américaine sur deux roues. Le V-Twin américain, le bruit caractéristique du moteur Milwaukee-Eight, la culture Harley — une philosophie de vie autant qu'une moto.",
+tags:["Milwaukee","V-Twin","Liberté","USA"],
+cars:[
+{m:"Pan America 1250 Special",y:"2024",t:"trail",cv:150,v:3.8,vmax:220,kg:252,eng:"V-Twin 1252cc RHVT",box:"6-Man",price:"24 000 €",pn:24000,desc:"Harley fait le trail. V-twin RHVT 150 ch, suspension semi-active, la surprise aventure Harley."},
+{m:"LiveWire One",y:"2024",t:"electrique",cv:105,v:3.0,vmax:177,kg:220,eng:"Électrique",box:"Réducteur",price:"22 000 €",pn:22000,desc:"La Harley électrique. 105 ch, 0-100 en 3 secondes, l'avenir de Milwaukee en mode silencieux."},
+{m:"Road Glide Ultra",y:"2024",t:"gt",cv:93,v:5.0,vmax:175,kg:399,eng:"V-Twin 1868cc Milwaukee-Eight",box:"6-Man",price:"32 000 €",pn:32000,desc:"Le tourer américain ultime. Milwaukee-Eight 117ci, carénage bateau, la GT américaine absolue."},
+{m:"Fat Boy 114",y:"2024",t:"custom",cv:79,v:5.5,vmax:170,kg:317,eng:"V-Twin 1868cc Milwaukee-Eight",box:"6-Man",price:"25 000 €",pn:25000,desc:"L'icône softail. Jantes à rayons plein, Milwaukee-Eight 114ci, le custom américain dans sa forme la plus pure."},
+{m:"Nightster Special",y:"2024",t:"custom",cv:91,v:4.5,vmax:180,kg:219,eng:"V-Twin 975cc Revolution Max",box:"6-Man",price:"15 000 €",pn:15000,desc:"La sportster néo-moderne. Revolution Max 975cc, la Harley la plus légère et la plus maniable."},
+]},
+{id:"mv_agusta",name:"MV Agusta",country:"Italie",city:"Varese, Lombardie",yr:"1945",flag:"🇮🇹",color:"#C41E3A",
+desc:"MV Agusta, née à Varese en 1945, est la marque la plus titrée en Grand Prix (75 titres mondiaux). Chaque MV est une sculpture mécanique italienne, produite en très petite série avec des matériaux nobles. L'art de la moto à son sommet absolu.",
+tags:["GP","Varese","Art","75 Titres"],
+cars:[
+{m:"Superveloce 1000 Serie Oro",y:"2024",t:"sportive",cv:208,v:3.0,vmax:305,kg:173,eng:"I4 998cc",box:"6-Man",price:"45 000 €",pn:45000,desc:"300 exemplaires. La MV Agusta de légende. I4 208 ch dans 173 kg. L'art mécanique à son sommet."},
+{m:"F4 RC",y:"2023",t:"sportive",cv:212,v:3.0,vmax:305,kg:175,eng:"I4 998cc",box:"6-Man",price:"50 000 €",pn:50000,desc:"La F4 ultime. 212 ch, chassis aluminium, technologie SBK directe. La dernière F4 de série."},
+{m:"Brutale 1000 RS",y:"2024",t:"roadster",cv:208,v:3.0,vmax:285,kg:175,eng:"I4 998cc",box:"6-Man",price:"32 000 €",pn:32000,desc:"Le naked hypercar. F4 motor, 208 ch, aileron actif, le roadster le plus raffiné d'Italie."},
+{m:"Turismo Veloce 800",y:"2024",t:"gt",cv:110,v:3.8,vmax:230,kg:190,eng:"I3 798cc",box:"6-Man",price:"22 000 €",pn:22000,desc:"Le sport-tourer triple MV. I3 798cc 110 ch, bagagerie intégrée, l'élégance italienne en voyage."},
+{m:"Lucky Explorer 9.5",y:"2024",t:"trail",cv:123,v:3.8,vmax:220,kg:209,eng:"I3 931cc",box:"6-Man",price:"25 000 €",pn:25000,desc:"L'adventure MV Agusta. Triple 931cc, design spectaculaire, la trail la plus belle du marché."},
+]},
+{id:"husqvarna",name:"Husqvarna",country:"Suède",city:"Huskvarna, Jönköping",yr:"1903",flag:"🇸🇪",color:"#003087",
+desc:"Husqvarna, fondé en 1903 en Suède, est l'un des pionniers de la moto de compétition. Aujourd'hui dans le giron KTM-Pierer, Husqvarna perpétue la tradition enduro et trial avec des machines d'une légèreté et d'une performance exceptionnelles.",
+tags:["Enduro","Trial","Suède","Pierer"],
+cars:[
+{m:"Norden 901",y:"2024",t:"trail",cv:105,v:4.0,vmax:210,kg:204,eng:"Parallel-Twin 889cc",box:"6-Man",price:"14 500 €",pn:14500,desc:"Le trail premium Husqvarna. Parallel-twin 105 ch, suspension WP Apex, look scandinave épuré."},
+{m:"Vitpilen 701",y:"2024",t:"roadster",cv:75,v:4.5,vmax:200,kg:175,eng:"Mono 692cc",box:"6-Man",price:"11 000 €",pn:11000,desc:"Le café-racer néo-moderne. Mono 75 ch, design suédois minimaliste, la moto la plus stylée du marché."},
+{m:"Svartpilen 801",y:"2024",t:"trail",cv:105,v:4.0,vmax:195,kg:186,eng:"Parallel-Twin 889cc",box:"6-Man",price:"13 500 €",pn:13500,desc:"Le scrambler Husqvarna. Parallel-twin 105 ch, look aventurier épuré, la plus légère de sa catégorie."},
+{m:"701 Enduro",y:"2024",t:"supermoto",cv:75,v:4.5,vmax:185,kg:148,eng:"Mono 692cc",box:"6-Man",price:"12 000 €",pn:12000,desc:"L'enduro monocylindre haute performance. 75 ch, 148 kg, suspension WP Xplor long travel."},
+]},
+{id:"royal_enfield",name:"Royal Enfield",country:"Inde",city:"Chennai, Tamil Nadu",yr:"1901",flag:"🇮🇳",color:"#8B4513",
+desc:"Royal Enfield, fondé en 1901, est le plus vieux constructeur moto encore en production. Basé à Chennai en Inde, la marque produit des motos néo-rétro authentiques à prix accessible, devenant le constructeur milieu de gamme le plus vendu au monde.",
+tags:["Néo-Rétro","Bullet","Chennai","Accessibilité"],
+cars:[
+{m:"Super Meteor 650",y:"2024",t:"custom",cv:47,v:5.5,vmax:160,kg:241,eng:"Parallel-Twin 648cc",box:"6-Man",price:"7 500 €",pn:7500,desc:"Le cruiser 650cc accessible. Parallel-twin 648cc 47 ch, position détendue, look néo-rétro chromé."},
+{m:"Himalayan 450",y:"2024",t:"trail",cv:40,v:6.0,vmax:150,kg:196,eng:"Mono 452cc",box:"6-Man",price:"6 500 €",pn:6500,desc:"Le trail aventure accessible. Mono 452cc, robuste, le Himalayan pour partir à l'aventure sans se ruiner."},
+{m:"Continental GT 650",y:"2024",t:"roadster",cv:47,v:5.2,vmax:165,kg:198,eng:"Parallel-Twin 648cc",box:"6-Man",price:"6 800 €",pn:6800,desc:"Le café-racer accessible. Parallel-twin 648cc, position sport basse, look 60s authentique."},
+{m:"Meteor 350",y:"2024",t:"custom",cv:20,v:7.0,vmax:130,kg:191,eng:"Mono 349cc",box:"5-Man",price:"4 500 €",pn:4500,desc:"Le cruiser d'entrée de gamme. Mono 349cc, 191 kg, la moto parfaite pour débuter avec style."},
+]},
+{id:"zero",name:"Zero Motorcycles",country:"USA",city:"Scotts Valley, Californie",yr:"2006",flag:"🇺🇸",color:"#00A550",
+desc:"Zero Motorcycles, fondé en 2006 en Californie, est le pionnier des motos électriques de performance. Basé à Santa Cruz, Zero conçoit des motos 100% électriques pour la route et le hors-route, repoussant les limites de l'autonomie et de la performance.",
+tags:["Électrique","Californie","Pionnier","Silencieux"],
+cars:[
+{m:"SR/F Premium",y:"2024",t:"electrique",cv:110,v:3.5,vmax:200,kg:220,eng:"Électrique ZF75-10",box:"Réducteur",price:"22 000 €",pn:22000,desc:"Le roadster électrique de référence. 110 ch, 259 km d'autonomie, charge rapide Charge Tank. Le futur."},
+{m:"DSR/X",y:"2024",t:"trail",cv:100,v:3.5,vmax:170,kg:225,eng:"Électrique ZF75-10",box:"Réducteur",price:"25 000 €",pn:25000,desc:"Le trail électrique premium. 100 ch, autonomie 240 km, capacités off-road élevées. L'aventure propre."},
+{m:"FXE",y:"2024",t:"supermoto",cv:78,v:3.8,vmax:150,kg:155,eng:"Électrique ZF75-5",box:"Réducteur",price:"13 000 €",pn:13000,desc:"Le supermoto électrique. 78 ch, 155 kg, 0-100 en 3.8s. La plus fun des électriques Zero."},
+]},
+{id:"benelli",name:"Benelli",country:"Italie",city:"Pesaro, Marche",yr:"1911",flag:"🇮🇹",color:"#006400",
+desc:"Benelli, fondé en 1911 à Pesaro, est l'une des plus anciennes marques italiennes. Aujourd'hui propriété du groupe chinois Qianjiang, Benelli propose des motos à prix accessible qui conservent l'ADN sportif italien tout en conquérant de nouveaux marchés.",
+tags:["Pesaro","Italian","Accessible","QJ"],
+cars:[
+{m:"TNT 600i",y:"2024",t:"roadster",cv:85,v:4.0,vmax:210,kg:219,eng:"I4 600cc",box:"6-Man",price:"8 000 €",pn:8000,desc:"L'I4 accessible. Quadricylindre 600cc 85 ch, le son unique d'un 4 cylindres à prix démocratique."},
+{m:"TRK 502X",y:"2024",t:"trail",cv:48,v:5.5,vmax:175,kg:220,eng:"Parallel-Twin 499cc",box:"6-Man",price:"6 200 €",pn:6200,desc:"L'adventure accessible. Parallel-twin 499cc, protection all-terrain, le trail du grand public."},
+{m:"Leoncino 500 Trail",y:"2024",t:"trail",cv:48,v:5.5,vmax:180,kg:215,eng:"Parallel-Twin 499cc",box:"6-Man",price:"6 800 €",pn:6800,desc:"Le scrambler-trail Benelli. Design rétro-aventurier, parallel-twin 48 ch, accessible et polyvalent."},
+]},
+{id:"moto_guzzi",name:"Moto Guzzi",country:"Italie",city:"Mandello del Lario, Côme",yr:"1921",flag:"🇮🇹",color:"#8B0000",
+desc:"Moto Guzzi, fondé en 1921 à Mandello del Lario au bord du lac de Côme, est la marque moto italienne la plus ancienne en activité. Le V-twin transversal à 90° est unique au monde — une signature sonore et mécanique incomparable depuis 1921.",
+tags:["V-Twin Transversal","Côme","Rétro","Piaggio"],
+cars:[
+{m:"V100 Mandello S",y:"2024",t:"roadster",cv:115,v:3.8,vmax:230,kg:213,eng:"V-Twin 1042cc",box:"6-Man",price:"17 000 €",pn:17000,desc:"Le Guzzi moderne. V-twin transversal 115 ch, aérodynamique active, le renouveau Moto Guzzi."},
+{m:"V7 Stone",y:"2024",t:"custom",cv:65,v:4.5,vmax:180,kg:208,eng:"V-Twin 853cc",box:"6-Man",price:"10 500 €",pn:10500,desc:"L'icône rétro Guzzi. V-twin 853cc 65 ch, style intemporel, la moto néo-classique italienne absolue."},
+{m:"V85 TT",y:"2024",t:"trail",cv:80,v:4.2,vmax:200,kg:229,eng:"V-Twin 853cc",box:"6-Man",price:"14 000 €",pn:14000,desc:"L'adventure néo-rétro. V-twin 853cc style scrambler vintage, l'aventurier le plus élégant."},
+]},
+{id:"indian",name:"Indian Motorcycle",country:"USA",city:"Spirit Lake, Iowa",yr:"1901",flag:"🇺🇸",color:"#8B0000",
+desc:"Indian Motorcycle, fondé en 1901, est la plus ancienne marque moto américaine. Ressuscitée en 2011 par Polaris, Indian propose des customs et tourers premium qui concurrencent directement Harley-Davidson avec un luxe et une finition supérieurs.",
+tags:["Iowa","Custom","Américain","Premium"],
+cars:[
+{m:"Indian Challenger Dark Horse",y:"2024",t:"custom",cv:122,v:4.0,vmax:200,kg:370,eng:"V-Twin 1768cc PowerPlus",box:"6-Man",price:"30 000 €",pn:30000,desc:"Le bagger premium. PowerPlus V-twin 122 ch, 7 pouces d'écran, système audio Ride Command."},
+{m:"Scout Bobber",y:"2024",t:"custom",cv:101,v:4.0,vmax:195,kg:254,eng:"V-Twin 1133cc",box:"6-Man",price:"16 000 €",pn:16000,desc:"Le custom compact premium. V-twin 1133cc 101 ch, position basse, style bobber épuré authentique."},
+{m:"FTR R Carbon",y:"2024",t:"roadster",cv:123,v:3.5,vmax:220,kg:211,eng:"V-Twin 1203cc",box:"6-Man",price:"20 000 €",pn:20000,desc:"Le flat-tracker pour la route. V-twin 1203cc, carbone généralisé, la moto la plus originale d'Indian."},
+]},
+{id:"gas_gas",name:"GasGas",country:"Espagne",city:"Girona, Catalogne",yr:"1985",flag:"🇪🇸",color:"#CC0000",
+desc:"GasGas, fondé à Girona en Catalogne en 1985, est le spécialiste mondial du trial et de l'enduro extrême. Aujourd'hui dans le groupe KTM-Pierer, GasGas conserve son ADN compétition en proposant des machines de haut niveau.",
+tags:["Trial","Enduro","Catalogne","Pierer"],
+cars:[
+{m:"EC 350F",y:"2024",t:"supermoto",cv:50,v:5.0,vmax:150,kg:106,eng:"Mono 350cc",box:"6-Man",price:"10 000 €",pn:10000,desc:"L'enduro de compétition. Mono 350cc, 106 kg, cadre chromoly, la machine de course homologuée."},
+{m:"MC 450F",y:"2024",t:"supermoto",cv:65,v:4.5,vmax:145,kg:101,eng:"Mono 449cc",box:"5-Man",price:"10 500 €",pn:10500,desc:"Le motocross de compétition. Mono 449cc 65 ch, 101 kg, châssis ultra-léger. Pour le circuit dirt."},
+{m:"ES 700",y:"2024",t:"trail",cv:70,v:4.5,vmax:190,kg:170,eng:"Parallel-Twin 699cc",box:"6-Man",price:"10 500 €",pn:10500,desc:"Le trail enduro 700cc. Parallel-twin, tout-terrain capable, le compromis route-piste parfait."},
+]},
+{id:"cfmoto",name:"CFMOTO",country:"Chine",city:"Hangzhou, Zhejiang",yr:"1989",flag:"🇨🇳",color:"#CC0000",
+desc:"CFMOTO, fondé à Hangzhou en 1989, est le constructeur chinois premium qui s'est imposé en Europe avec des motos au rapport qualité-prix exceptionnel. Partenaire de KTM pour la distribution, CFMOTO monte en gamme avec des modèles très compétitifs.",
+tags:["Chine","Qualité-Prix","KTM Partner","Hangzhou"],
+cars:[
+{m:"450SS",y:"2024",t:"sportive",cv:47,v:5.0,vmax:185,kg:168,eng:"Parallel-Twin 449cc",box:"6-Man",price:"6 500 €",pn:6500,desc:"La sportive chinoise abordable. Parallel-twin 449cc, design sportif, le meilleur rapport qualité-prix."},
+{m:"800MT Sport",y:"2024",t:"trail",cv:95,v:4.0,vmax:210,kg:218,eng:"Parallel-Twin 799cc",box:"6-Man",price:"9 500 €",pn:9500,desc:"Le trail 800cc accessible. Parallel-twin KTM-derived 95 ch, technologie premium, prix démocratique."},
+{m:"700CL-X",y:"2024",t:"roadster",cv:72,v:4.5,vmax:195,kg:195,eng:"Parallel-Twin 693cc",box:"6-Man",price:"7 500 €",pn:7500,desc:"Le néo-rétro abordable. Parallel-twin 72 ch, design rétro réussi, l'alternative aux japonaises."},
+]},
+{id:"energica",name:"Energica",country:"Italie",city:"Modène, Émilie-Romagne",yr:"2012",flag:"🇮🇹",color:"#006400",
+desc:"Energica, fondé en 2012 à Modène, est le pionnier européen de la moto électrique de performance. Ancien fournisseur officiel du championnat MotoE, Energica produit des motos 100% électriques combinant performance de superbike et autonomie en nette progression.",
+tags:["Électrique","MotoE","Modène","Performance"],
+cars:[
+{m:"Ego+ RS",y:"2024",t:"sportive",cv:107,v:3.0,vmax:200,kg:260,eng:"Électrique 107kW",box:"Réducteur",price:"26 000 €",pn:26000,desc:"La superbike électrique. 107 ch, 0-100 en 3.0s, 400 Nm. La sportive électrique la plus performante."},
+{m:"Eva Ribelle RS",y:"2024",t:"roadster",cv:107,v:3.0,vmax:200,kg:255,eng:"Électrique 107kW",box:"Réducteur",price:"24 000 €",pn:24000,desc:"Le roadster électrique premium. Même motorisation Ego, position naked, l'alternative au roadster thermique."},
+{m:"Experia",y:"2024",t:"gt",cv:80,v:3.5,vmax:180,kg:260,eng:"Électrique 80kW",box:"Réducteur",price:"23 000 €",pn:23000,desc:"Le tourer électrique. 80 ch, 420 km d'autonomie WMTC, la moto électrique pour les longs voyages."},
+]},
+{id:"norton",name:"Norton",country:"Angleterre",city:"Solihull, West Midlands",yr:"1898",flag:"🇬🇧",color:"#C0C0C0",
+desc:"Norton, fondé en 1898, est la marque moto britannique de légende. Racheté par TVS Motor en 2020 et relocalisé à Solihull, Norton renaît avec des modèles premium haut de gamme qui honorent l'héritage du Manx et de l'Commando tout en intégrant la technologie moderne.",
+tags:["British Legend","Commando","TVS","Solihull"],
+cars:[
+{m:"V4CR",y:"2024",t:"roadster",cv:185,v:3.2,vmax:270,kg:185,eng:"V4 1200cc",box:"6-Man",price:"38 000 €",pn:38000,desc:"Le café-racer V4 de légende renouvelée. 185 ch, 185 kg, titane généralisé. Le Norton ultime."},
+{m:"V4RR",y:"2024",t:"sportive",cv:185,v:3.1,vmax:280,kg:186,eng:"V4 1200cc",box:"6-Man",price:"44 000 €",pn:44000,desc:"La superbike Norton. V4 185 ch, châssis aluminium, les 30 premières livrées avec plaque d'or signée."},
+{m:"Commando 961",y:"2024",t:"roadster",cv:80,v:4.0,vmax:190,kg:210,eng:"Parallel-Twin 961cc",box:"6-Man",price:"19 000 €",pn:19000,desc:"L'hommage au Commando original. Parallel-twin 961cc, style 70s moderne, le néo-rétro britannique."},
+]},
+{id:"sherco",name:"Sherco",country:"France",city:"Cahors, Lot",yr:"1999",flag:"🇫🇷",color:"#003087",
+desc:"Sherco, fondé à Cahors dans le Lot en 1999, est le principal constructeur français de motos de compétition. Spécialisé dans le trial, l'enduro et le motocross, Sherco est présent au Dakar et dans les championnats mondiaux avec ses machines légères.",
+tags:["Trial","Enduro","France","Cahors"],
+cars:[
+{m:"300 SEF Racing",y:"2024",t:"supermoto",cv:42,v:5.5,vmax:135,kg:105,eng:"Mono 300cc",box:"6-Man",price:"10 500 €",pn:10500,desc:"L'enduro de compétition français. Mono 300cc, 105 kg, le fer de lance Sherco pour les championnats."},
+{m:"500 SEF Factory",y:"2024",t:"supermoto",cv:60,v:5.0,vmax:145,kg:110,eng:"Mono 500cc",box:"6-Man",price:"12 000 €",pn:12000,desc:"Le 500cc enduro Factory. Édition compétition avec fourche KYB Factory, le top Sherco route."},
+{m:"TVS 125 ST",y:"2024",t:"supermoto",cv:15,v:7.0,vmax:100,kg:82,eng:"Mono 125cc",box:"6-Man",price:"4 500 €",pn:4500,desc:"Le trial 125cc accessible. 82 kg, maniabilité extrême, l'initiation parfaite au trial de compétition."},
+]},
+{id:"bimota",name:"Bimota",country:"Italie",city:"Rimini, Émilie-Romagne",yr:"1973",flag:"🇮🇹",color:"#8B0000",
+desc:"Bimota, fondé à Rimini en 1973, est le constructeur de chassis d'exception. Associé aujourd'hui à Kawasaki pour la technologie, Bimota crée des motos en très petite série avec des chassis en carbone et titane sur des motorisations Kawasaki de compétition.",
+tags:["Rimini","Kawasaki","Petit Tirage","Chassis"],
+cars:[
+{m:"Tesi H2",y:"2024",t:"roadster",cv:231,v:2.9,vmax:280,kg:215,eng:"I4 998cc H2 Superchargé",box:"6-Man",price:"65 000 €",pn:65000,desc:"La moto la plus avant-gardiste du monde. Moteur H2 superchargé 231 ch, suspension avant par bras."},
+{m:"KB4",y:"2024",t:"sportive",cv:203,v:3.0,vmax:299,kg:183,eng:"I4 998cc ZX-10RR",box:"6-Man",price:"50 000 €",pn:50000,desc:"Le chassis Bimota, le moteur ZX-10RR. 183 kg seulement, l'alliance chassis art + moteur champion."},
+{m:"SB8C",y:"2024",t:"sportive",cv:100,v:3.8,vmax:240,kg:162,eng:"Parallel-Twin 900cc",box:"6-Man",price:"35 000 €",pn:35000,desc:"Le chassis carbone Bimota. 162 kg, parallel-twin, l'art du chassis léger à son expression absolue."},
+]},
+{id:"voxan",name:"Voxan",country:"France",city:"Issoire, Auvergne",yr:"1999",flag:"🇫🇷",color:"#8B0000",
+desc:"Voxan, fondé à Issoire en Auvergne, est le constructeur français de moto électrique de record. La Wattman, propulsée par Maxime Martin avec Max Biaggi, a battu 11 records du monde de vitesse à Landres-Bonneville en 2022. La France des records.",
+tags:["Record Mondial","Électrique","Auvergne","Wattman"],
+cars:[
+{m:"Wattman",y:"2022",t:"electrique",cv:367,v:2.5,vmax:408,kg:380,eng:"Électrique 270kW",box:"Réducteur",price:"Sur Commande",pn:500000,desc:"11 records du monde. 408 km/h, 367 ch électriques. La moto électrique la plus rapide de l'histoire."},
+]},
+{id:"arch",name:"Arch Motorcycle",country:"USA",city:"Los Angeles, Californie",yr:"2011",flag:"🇺🇸",color:"#333",
+desc:"Arch Motorcycle, fondé à Los Angeles par Keanu Reeves et Gard Hollinger, crée des customs américains ultra-premium à la main en très petit tirage. Chaque Arch est une pièce unique avec un niveau de finition et de personnalisation absolument inégalé.",
+tags:["Los Angeles","Keanu Reeves","Custom Premium","Art"],
+cars:[
+{m:"KRGT-1",y:"2024",t:"custom",cv:121,v:4.0,vmax:200,kg:251,eng:"V-Twin 2032cc S&S",box:"6-Man",price:"85 000 €",pn:85000,desc:"La moto de Keanu Reeves. V-twin S&S 2032cc, assemblée à la main à LA, 100 exemplaires par an maximum."},
+{m:"Method 143",y:"2024",t:"custom",cv:121,v:3.8,vmax:210,kg:245,eng:"V-Twin 2032cc S&S",box:"6-Man",price:"95 000 €",pn:95000,desc:"L'Arch premium ultime. Carrosserie en carbone, 100% sur mesure, la custom la plus exclusive au monde."},
+]},
+{id:"ural",name:"Ural",country:"Russie",city:"Irbit, Oural",yr:"1941",flag:"🇷🇺",color:"#8B4513",
+desc:"Ural, fondé en 1941 dans les montagnes de l'Oural pour équiper l'armée soviétique, est le dernier constructeur de side-cars en production de série. Ces motos rétro à 2 roues motrices offrent une expérience de conduite unique et inimitable dans le monde entier.",
+tags:["Side-Car","Oural","URSS","Rétro Unique"],
+cars:[
+{m:"Gear Up",y:"2024",t:"custom",cv:41,v:8.0,vmax:105,kg:335,eng:"Boxer 749cc",box:"4-Man 2RM",price:"20 000 €",pn:20000,desc:"Le side-car militaire civil. Boxer 749cc, 2 roues motrices, treuil avant, marche arrière. L'unique."},
+{m:"CT",y:"2024",t:"custom",cv:41,v:8.5,vmax:100,kg:310,eng:"Boxer 749cc",box:"4-Man",price:"16 000 €",pn:16000,desc:"Le side-car Ural classique. Boxer 749cc, 1 roue motrice, l'expérience rétro soviétique pour la route."},
+]},
+];
+
+// ── INIT ──────────────────────────────────────────────
+let cur=B[0],flt='all',cmp=[],dark=true,lang='fr';
+const tot=B.reduce((a,b)=>a+b.cars.length,0);
+document.getElementById('htot').textContent=tot;
+document.getElementById('ftot').textContent=tot;
+
+// THEME
+const thBtn=document.getElementById('themeBtn');
+function setTheme(d){dark=d;document.documentElement.setAttribute('data-theme',d?'dark':'light');thBtn.textContent=d?'🌙':'☀️';}
+thBtn.onclick=()=>setTheme(!dark);
+
+// TRANSLATIONS
+const TR={
+  fr:{ddlbl:"Marques",search_ph:"Rechercher moto, marque…",filt:"Filtrer :",f_all:"Tous",f_sport:"Sportive",f_trail:"Trail / Aventure",f_road:"Roadster / Naked",f_gt:"Grand Tourisme",f_cust:"Custom / Cruiser",f_sm:"Supermoto",f_elec:"Électrique",sort_def:"Ordre par défaut",sort_pa:"Prix croissant",sort_pd:"Prix décroissant",sort_cv:"Puissance ↓",sort_v:"0-100 le + rapide",clbl:"Comparer",cclr:"Effacer",cgo:"COMPARER →",mh:"COMPARATIF",f_mods:"Modèles",f_brnds:"Marques",f_ctrs:"Pays",fcopy:"© 2025 MotoElite — Prix indicatifs, varient selon pays et équipement",bpmod:"Modèles",bpyr:"Fondée",bporig:"Origine",bpph:"Sélectionnez une marque dans le menu pour découvrir son histoire et sa gamme complète.",found_lbl:"Fondée en",cv_lbl:"Puissance",v_lbl:"0-100",vmax_lbl:"Vmax",kg_lbl:"Poids",box_lbl:"Boîte",price_lbl:"Prix",depart_lbl:"Prix de départ",btn_cmp:"+ Comparer",btn_cmped:"✓ Ajouté",max_cmp:"Max 3 motos à comparer",sr_none:"Aucun résultat trouvé.",hero_ey:"L'univers moto mondial",hero_h:"PURE ADRÉNALINE SUR 2 ROUES",hero_sub:"28 marques · 200+ modèles · Routes, circuits et pistes du monde entier",hero_cta:"EXPLORER",hero_scr:"DÉFILER",se:"Collection mondiale",st:"MARQUES DE LÉGENDE"},
+  en:{ddlbl:"Brands",search_ph:"Search bike, brand…",filt:"Filter:",f_all:"All",f_sport:"Sport",f_trail:"Trail / Adventure",f_road:"Roadster / Naked",f_gt:"Grand Tourer",f_cust:"Custom / Cruiser",f_sm:"Supermoto",f_elec:"Electric",sort_def:"Default order",sort_pa:"Price ascending",sort_pd:"Price descending",sort_cv:"Power ↓",sort_v:"Fastest 0-60",clbl:"Compare",cclr:"Clear",cgo:"COMPARE →",mh:"COMPARISON",f_mods:"Models",f_brnds:"Brands",f_ctrs:"Countries",fcopy:"© 2025 MotoElite — Indicative prices, may vary by country and equipment",bpmod:"Models",bpyr:"Founded",bporig:"Origin",bpph:"Select a brand from the menu to discover its history and full range.",found_lbl:"Founded in",cv_lbl:"Horsepower",v_lbl:"0-60 mph",vmax_lbl:"Top speed",kg_lbl:"Weight",box_lbl:"Gearbox",price_lbl:"Price",depart_lbl:"Starting price",btn_cmp:"+ Compare",btn_cmped:"✓ Added",max_cmp:"Max 3 bikes to compare",sr_none:"No results found.",hero_ey:"The world of motorcycles",hero_h:"PURE ADRENALINE ON 2 WHEELS",hero_sub:"28 brands · 200+ models · Roads, circuits and tracks worldwide",hero_cta:"EXPLORE",hero_scr:"SCROLL",se:"World collection",st:"LEGENDARY BRANDS"},
+  es:{ddlbl:"Marcas",search_ph:"Buscar moto, marca…",filt:"Filtrar:",f_all:"Todos",f_sport:"Deportiva",f_trail:"Trail / Aventura",f_road:"Roadster / Naked",f_gt:"Gran Turismo",f_cust:"Custom / Cruiser",f_sm:"Supermoto",f_elec:"Eléctrica",sort_def:"Orden predeterminado",sort_pa:"Precio ascendente",sort_pd:"Precio descendente",sort_cv:"Potencia ↓",sort_v:"0-100 más rápido",clbl:"Comparar",cclr:"Borrar",cgo:"COMPARAR →",mh:"COMPARATIVA",f_mods:"Modelos",f_brnds:"Marcas",f_ctrs:"Países",fcopy:"© 2025 MotoElite — Precios orientativos, pueden variar según país y equipo",bpmod:"Modelos",bpyr:"Fundada",bporig:"Origen",bpph:"Seleccione una marca en el menú para descubrir su historia y gama completa.",found_lbl:"Fundada en",cv_lbl:"Caballos",v_lbl:"0-100",vmax_lbl:"Vel. máx.",kg_lbl:"Peso",box_lbl:"Caja",price_lbl:"Precio",depart_lbl:"Precio de salida",btn_cmp:"+ Comparar",btn_cmped:"✓ Añadido",max_cmp:"Máx. 3 motos a comparar",sr_none:"No se encontraron resultados.",hero_ey:"El universo de la moto mundial",hero_h:"PURA ADRENALINA SOBRE 2 RUEDAS",hero_sub:"28 marcas · 200+ modelos · Carreteras, circuitos y pistas del mundo",hero_cta:"EXPLORAR",hero_scr:"DESPLAZAR",se:"Colección mundial",st:"MARCAS DE LEYENDA"}
+};
+function t(k){return TR[lang][k]||TR.fr[k]||k}
+
+function setLang(l){
+  lang=l;
+  const fl={fr:'🇫🇷',en:'🇬🇧',es:'🇪🇸'};
+  const co={fr:'FR',en:'EN',es:'ES'};
+  document.getElementById('lang-flag').textContent=fl[l];
+  document.getElementById('lang-code').textContent=co[l];
+  document.getElementById('lang-dd').classList.remove('open');
+  document.documentElement.setAttribute('lang',l);
+  applyTR();renderCars();updateBP();
+}
+function toggleLangDD(){document.getElementById('lang-dd').classList.toggle('open')}
+
+function applyTR(){
+  document.getElementById('ddlbl').textContent=t('ddlbl');
+  document.getElementById('search').placeholder=t('search_ph');
+  document.querySelector('.hero-eyebrow,.hey').textContent=t('hero_ey');
+  document.querySelector('.hh').innerHTML=t('hero_h');
+  document.querySelector('.hsub').textContent=t('hero_sub');
+  document.querySelector('.hcta').textContent=t('hero_cta');
+  document.querySelector('.hscroll span,.hero-scroll span').textContent=t('hero_scr');
+  document.querySelector('.se').textContent=t('se');
+  document.querySelector('.st').innerHTML=t('st').replace('LÉGENDE','<span class="stb">LÉGENDE</span>').replace('LEGENDS','<span class="stb">LEGENDS</span>').replace('LEYENDA','<span class="stb">LEYENDA</span>');
+  document.querySelector('.flbl').textContent=t('filt');
+  document.querySelector('.clbl').textContent=t('clbl');
+  document.querySelector('.cclr').textContent=t('cclr');
+  document.querySelector('.cgo').textContent=t('cgo');
+  document.querySelector('.mh').textContent=t('mh');
+  document.querySelector('.fcopy').textContent=t('fcopy');
+  const fBtns=document.querySelectorAll('.fb');
+  const fk=['f_all','f_sport','f_trail','f_road','f_gt','f_cust','f_sm','f_elec'];
+  fBtns.forEach((b,i)=>{if(fk[i])b.textContent=t(fk[i])});
+  const sel=document.getElementById('sortSel');
+  const sk=['sort_def','sort_pa','sort_pd','sort_cv','sort_v'];
+  [...sel.options].forEach((o,i)=>{if(sk[i])o.text=t(sk[i])});
+  const bpsl=document.querySelectorAll('.bps .l');
+  if(bpsl[0])bpsl[0].textContent=t('bpmod');
+  if(bpsl[1])bpsl[1].textContent=t('bpyr');
+  if(bpsl[2])bpsl[2].textContent=t('bporig');
+  const fstl=document.querySelectorAll('.fst .l');
+  if(fstl[0])fstl[0].textContent=t('f_mods');
+  if(fstl[1])fstl[1].textContent=t('f_brnds');
+  if(fstl[2])fstl[2].textContent=t('f_ctrs');
+}
+
+// REGIONS DROPDOWN
+const regions={
+  '🇯🇵 Japon':['honda','yamaha','kawasaki','suzuki'],
+  '🇮🇹 Italie':['ducati','aprilia','mv_agusta','moto_guzzi','benelli','energica','bimota'],
+  '🇩🇪 Allemagne':['bmw_moto'],
+  '🇦🇹 Autriche':['ktm'],
+  '🇬🇧 Angleterre':['triumph','norton'],
+  '🇺🇸 USA':['harleydavidson','zero','indian','arch'],
+  '🇸🇪 Suède':['husqvarna'],
+  '🇮🇳 Inde':['royal_enfield'],
+  '🇫🇷 France':['sherco','voxan'],
+  '🇪🇸 Espagne':['gas_gas'],
+  '🇨🇳 Chine':['cfmoto'],
+  '🇷🇺 Russie':['ural'],
+};
+function buildDD(){
+  const m=document.getElementById('ddm');
+  m.innerHTML='';
+  for(const[r,ids] of Object.entries(regions)){
+    m.innerHTML+=`<div class="ddc">${r}</div>`;
+    ids.forEach(id=>{
+      const b=B.find(x=>x.id===id);
+      if(b) m.innerHTML+=`<div class="ddi${b.id===cur.id?' active':''}" onclick="selB('${b.id}')">${b.flag} ${b.name}<span class="ddcnt">${b.cars.length} mod.</span></div>`;
+    });
+  }
+}
+function toggleDD(){document.getElementById('dd').classList.toggle('open')}
+document.addEventListener('click',e=>{
+  if(!e.target.closest('#dd'))document.getElementById('dd').classList.remove('open');
+  if(!e.target.closest('#lang-dd'))document.getElementById('lang-dd').classList.remove('open');
+});
+
+function selB(id){
+  cur=B.find(b=>b.id===id);
+  document.getElementById('dd').classList.remove('open');
+  document.getElementById('ddlbl').textContent=cur.name;
+  buildDD();updateBP();renderCars();
+  document.getElementById('main').scrollIntoView({behavior:'smooth'});
+}
+
+function updateBP(){
+  const p=document.getElementById('bpanel');
+  p.style.setProperty('--bc',cur.color);
+  document.getElementById('bpn').textContent=cur.name;
+  document.getElementById('bpfc').textContent=cur.flag+' '+cur.country;
+  document.getElementById('bpcity').textContent=cur.city+' · '+t('found_lbl')+' '+cur.yr;
+  document.getElementById('bpmod').textContent=cur.cars.length;
+  document.getElementById('bpyr').textContent=cur.yr;
+  document.getElementById('bpfl').textContent=cur.flag;
+  document.getElementById('bpdesc').textContent=cur.desc;
+  document.getElementById('bpg').textContent=cur.name[0];
+  document.getElementById('bptags').innerHTML=cur.tags.map(tg=>`<span class="bptag">${tg}</span>`).join('');
+  document.getElementById('smeta').textContent=cur.name+' · '+cur.cars.length+' modèles · '+cur.city;
+}
+
+// FILTER
+let curF='all';
+function setF(f,btn){
+  curF=f;
+  document.querySelectorAll('.fb').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  renderCars();
+}
+function typeLbl(tp){
+  const map={sportive:'f_sport',trail:'f_trail',roadster:'f_road',gt:'f_gt',custom:'f_cust',supermoto:'f_sm',electrique:'f_elec'};
+  return t(map[tp]||'f_all');
+}
+
+function hexRgb(hex){
+  const r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);
+  return`${r},${g},${b}`;
+}
+
+function getSorted(cars){
+  const v=document.getElementById('sortSel').value;
+  const c=[...cars];
+  if(v==='pa')c.sort((a,b)=>a.pn-b.pn);
+  else if(v==='pd')c.sort((a,b)=>b.pn-a.pn);
+  else if(v==='cv')c.sort((a,b)=>b.cv-a.cv);
+  else if(v==='v')c.sort((a,b)=>a.v-b.v);
+  return c;
+}
+
+function renderCars(){
+  let cars=curF==='all'?cur.cars:cur.cars.filter(c=>c.t===curF);
+  cars=getSorted(cars);
+  const grid=document.getElementById('cg');
+  if(!cars.length){grid.innerHTML=`<div class="nores">Aucun modèle dans cette catégorie</div>`;return}
+  const rgb=hexRgb(cur.color);
+  grid.innerHTML=cars.map((c,i)=>{
+    const inC=cmp.find(x=>x.bid===cur.id&&x.m===c.m);
+    return`<div class="cc">
+      <div class="cv" style="background:linear-gradient(135deg,rgba(${rgb},.2) 0%,rgba(${rgb},.04) 100%)">
+        <div class="cvbg" style="background:var(--bg3)"></div>
+        <div class="cvpat"></div>
+        <div class="cvlines"></div>
+        <span class="cvtype">${typeLbl(c.t)}</span>
+        <span class="cvnum">${String(i+1).padStart(2,'0')}</span>
+        <div class="cvm">${c.m}</div>
+        <div class="cvbrand">${cur.name} · ${c.y}</div>
+        <div class="cvletter">${c.m[0]}</div>
+        <div class="cvbar" style="background:linear-gradient(90deg,${cur.color},transparent)"></div>
+        <div class="cvtick"></div>
+      </div>
+      <div class="cb">
+        <div class="cm">${c.m}</div>
+        <div class="csub">${cur.name} · ${c.y} · ${c.eng}</div>
+        <div class="sg">
+          <div class="sp"><span class="v">${c.cv}</span><span class="l">${t('cv_lbl')}</span></div>
+          <div class="sp"><span class="v">${c.v}s</span><span class="l">${t('v_lbl')}</span></div>
+          <div class="sp"><span class="v">${c.vmax}</span><span class="l">${t('vmax_lbl')}</span></div>
+        </div>
+        <div class="sg">
+          <div class="sp"><span class="v">${c.kg}</span><span class="l">${t('kg_lbl')} kg</span></div>
+          <div class="sp"><span class="v">${c.box.split(' ')[0]}</span><span class="l">${t('box_lbl')}</span></div>
+          <div class="sp"><span class="v">${c.price.split(' ')[0]}</span><span class="l">${t('price_lbl')} €</span></div>
+        </div>
+        <p class="cdesc">${c.desc}</p>
+        <div class="cf">
+          <div><div class="cp">${c.price}</div><div class="cplbl">${t('depart_lbl')}</div></div>
+          <button class="cbtn${inC?' on':''}" onclick="toggleCmp('${cur.id}','${cur.name}','${c.m.replace(/'/g,"\\'")}',${c.cv},${c.v},${c.vmax},${c.kg},'${c.price}','${c.eng}',this)">
+            ${inC?t('btn_cmped'):t('btn_cmp')}
+          </button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// COMPARE
+function toggleCmp(bid,bname,model,cv,v,vmax,kg,price,eng,btn){
+  const idx=cmp.findIndex(x=>x.bid===bid&&x.m===model);
+  if(idx>-1){cmp.splice(idx,1);btn.textContent=t('btn_cmp');btn.classList.remove('on')}
+  else{
+    if(cmp.length>=3){alert(t('max_cmp'));return}
+    cmp.push({bid,bname,m:model,cv,v,vmax,kg,price,eng});
+    btn.textContent=t('btn_cmped');btn.classList.add('on');
+    showToast(model);
+  }
+  updateCbar();
+}
+function updateCbar(){
+  const bar=document.getElementById('cbar');
+  document.getElementById('cchips').innerHTML=cmp.map(c=>`<div class="chip">${c.bname} ${c.m}<button onclick="remCmp('${c.bid}','${c.m.replace(/'/g,"\\'")}')">×</button></div>`).join('');
+  cmp.length?bar.classList.add('vis'):bar.classList.remove('vis');
+}
+function remCmp(bid,m){cmp=cmp.filter(x=>!(x.bid===bid&&x.m===m));updateCbar();renderCars()}
+function clearCmp(){cmp=[];updateCbar();renderCars()}
+function openModal(){
+  if(!cmp.length)return;
+  const rows=[['Marque',...cmp.map(c=>c.bname)],['Modèle',...cmp.map(c=>c.m)],['Moteur',...cmp.map(c=>c.eng)],['Puissance',...cmp.map(c=>c.cv+' ch')],['0-100 km/h',...cmp.map(c=>c.v+'s')],['Vmax',...cmp.map(c=>c.vmax+' km/h')],['Poids',...cmp.map(c=>c.kg+' kg')],['Prix',...cmp.map(c=>c.price)]];
+  document.getElementById('mbody').innerHTML=`<table class="ctab"><thead><tr><th></th>${cmp.map(c=>`<th>${c.bname}<br><span style="font-family:var(--fu);font-size:.78rem;color:var(--tm);font-weight:400">${c.m}</span></th>`).join('')}</tr></thead><tbody>${rows.map(r=>`<tr>${r.map(cell=>`<td>${cell}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
+  document.getElementById('cmod').classList.add('open');
+}
+function closeModal(){document.getElementById('cmod').classList.remove('open')}
+
+// SEARCH
+const srchEl=document.getElementById('search');
+const srDiv=document.getElementById('sr');
+const srl=document.getElementById('srl');
+const srh=document.getElementById('srh');
+srchEl.addEventListener('input',()=>{
+  const q=srchEl.value.trim().toLowerCase();
+  if(!q){srDiv.classList.remove('vis');return}
+  const res=[];
+  B.forEach(b=>b.cars.forEach(c=>{
+    if(c.m.toLowerCase().includes(q)||b.name.toLowerCase().includes(q)||c.eng.toLowerCase().includes(q)||c.t.toLowerCase().includes(q)||b.country.toLowerCase().includes(q)||b.city.toLowerCase().includes(q))
+      res.push({b,c});
+  }));
+  srh.textContent=res.length+' résultat'+(res.length>1?'s':'')+' · "'+srchEl.value+'"';
+  srl.innerHTML=res.length?res.slice(0,14).map(r=>`
+    <div class="sri" onclick="goR('${r.b.id}')">
+      <div><div class="srm">${r.c.m}</div><div class="srb">${r.b.flag} ${r.b.name} · ${r.b.city} · ${r.c.y}</div></div>
+      <div style="text-align:right"><div class="srp">${r.c.price}</div><div class="srcc">${r.c.cv} ch · ${r.c.v}s</div></div>
+    </div>`).join(''):`<div class="srno">${t('sr_none')}</div>`;
+  srDiv.classList.add('vis');
+});
+function goR(id){srchEl.value='';srDiv.classList.remove('vis');selB(id)}
+document.addEventListener('click',e=>{if(!e.target.closest('#sr')&&!e.target.closest('#search'))srDiv.classList.remove('vis')});
+srchEl.addEventListener('keydown',e=>{if(e.key==='Escape'){srchEl.value='';srDiv.classList.remove('vis')}});
+
+function showToast(msg){
+  const t=document.getElementById('toast');t.textContent=msg;t.style.opacity='1';
+  setTimeout(()=>t.style.opacity='0',2000);
+}
+window.addEventListener('scroll',()=>{document.getElementById('nb').style.height=window.scrollY>50?'52px':'62px'});
+
+buildDD();updateBP();renderCars();
+</script>
+</body>
+</html>
